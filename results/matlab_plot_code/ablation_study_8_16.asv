@@ -1,0 +1,157 @@
+clc,clear
+clear all;
+crt = pwd;
+addpath(genpath(crt));    % 添加当前的文件夹
+
+opts = detectImportOptions('../plot_data/SAC_8000_eva_value_data_2025-08-13-20-54-36.csv');
+data = readtable('../plot_data/SAC_8000_eva_value_data_2025-08-13-20-54-36.csv',opts);
+
+% 取出第三列所有标签分类
+control_tag = cellfun(@(c) c(1), data.control_tag_list,'UniformOutput',false);
+
+% 找到"C"的行索引
+idx_C = strcmp(control_tag,'C');
+
+% 提取相应的数据行
+sample_number = 1500;
+window_size = 20;
+start_index = 500;
+data_index = (start_index+1):(start_index+sample_number);
+
+
+% 模型控制的数据
+xc = 1:sample_number;
+ycf = data.eva_value_list(idx_C);
+yc = ycf(data_index+1100);
+
+mov_yc = moving_average(yc,window_size);
+
+
+% 随机-路由
+data1 = readmatrix('../plot_data/SAC_6000_eva_value_data_2025-08-15-09-39-09_random_routing.csv');
+x1 = data1(end-sample_number:end,1);
+y1 = data1(end-sample_number:end,2);
+mov_y1 = moving_average(y1,window_size);
+
+
+
+% 决策-最短
+data2 = readmatrix('../plot_data/SAC_5400_eva_value_data_2025-08-15-11-50-53_control_sp.csv');
+x2 = data2(end-sample_number:end,1);
+y2 = data2(end-sample_number:end,2);
+mov_y2 = moving_average(y2,window_size);
+
+% 随机-最短
+data3 = readmatrix('../plot_data/SAC_11800_eva_value_data_2025-08-14-17-06-56_17.csv');
+x3 = data3(data_index,1);
+y3 = data3(data_index,2);
+mov_y3 = moving_average(y3,window_size);
+
+% 确定目的18
+data4 = readmatrix('../plot_data/SAC_6800_eva_value_data_2025-08-14-19-32-19_18.csv');
+x4 = data4(data_index,1);
+y4 = data4(data_index,2);
+mov_y4 = moving_average(y4,window_size);
+
+
+% PPO-DDPG
+opts = detectImportOptions('../plot_data/PPO_11600_eva_value_data_2025-08-14-21-11-18.csv');
+data = readtable('../plot_data/PPO_11600_eva_value_data_2025-08-14-21-11-18.csv',opts);
+
+% 取出第三列所有标签分类
+control_tag = cellfun(@(c) c(1), data.control_tag_list,'UniformOutput',false);
+
+% 找到"C"的行索引
+idx_C = strcmp(control_tag,'C');
+
+ycf = data.eva_value_list(idx_C);
+yc2 = ycf(data_index);
+
+mov_yc2 = moving_average(yc2,window_size);
+
+rate = 95;
+figure
+hold on 
+plot_smoothed_band(xc, yc, 'Window', window_size, 'Band', 0.9, 'ShowRaw', false, 'YLim', [0 max(yc)+1]);
+plot_smoothed_band(xc, y1, 'Window', window_size, 'Band', 0.9, 'ShowRaw', false, 'YLim', [0 max(yc)+1]);
+plot_smoothed_band(xc, y2, 'Window', window_size, 'Band', 0.9, 'ShowRaw', false, 'YLim', [0 max(yc)+1]);
+plot_smoothed_band(xc, y3, 'Window', window_size, 'Band', 0.9, 'ShowRaw', false, 'YLim', [0 max(yc)+1]);
+plot_smoothed_band(xc, y4, 'Window', window_size, 'Band', 0.9, 'ShowRaw', false, 'YLim', [0 max(yc)+1]);
+plot_smoothed_band(xc, yc2, 'Window', window_size, 'Band', 0.9, 'ShowRaw', false, 'YLim', [0 max(yc)+1]);
+
+% [lower,upper,medianFit] = plot_confidence_belt(xc,yc,rate);
+
+% xc = xc(:);       % 保证是列向量
+% yc = yc(:);
+% 
+% 
+% nBoot = 500;                              % bootstrap次数
+% yFits = zeros(length(xc), nBoot);
+% 
+% for i = 1:nBoot
+%     idx = randi(length(xc), length(xc), 1);      % 有放回采样
+%     xBoot = xc(idx);
+%     yBoot = yc(idx);
+%     fBoot = fit(xBoot, yBoot, 'smoothingspline');
+%     yFits(:, i) = fBoot(xc);                     % 记录拟合值
+% end
+% 
+% % 计算置信区间
+% lower = prctile(yFits, 5, 2);   % 2.5分位数
+% upper = prctile(yFits, 95, 2);  % 97.5分位数
+% medianFit = median(yFits, 2);
+% 
+% % 绘图
+% figure;
+% hold on;
+% fill([xc; flipud(xc)], [lower; flipud(upper)], [0.8 0.85 1], ...
+%     'EdgeColor', 'none', 'FaceAlpha', 0.4, 'DisplayName', '90%置信带');
+% % plot(xc, medianFit, 'b-', 'LineWidth', 2, 'DisplayName', '拟合中位数');
+% plot(xc, yc, 'ko', 'MarkerFaceColor', 'w', 'DisplayName', '原始数据');
+% xlabel('x'); ylabel('y');
+% legend;
+% title('Bootstrap估算的置信带');
+
+% plot(xc,yc)
+% plot(xc,mov_yc)
+
+% x1 = xc;
+% y1 = yc;
+% n1 = size(x1,2);
+% n2 = size(x2,2);
+% alpha = 0.05;
+% 
+% tval1 = tinv(1-alpha/2, n1-1);
+% tval2 = tinv(1-alpha/2, n2-1);
+% 
+% mean1 = mean(x1,2); std1 = std(x1,0,2);
+% mean2 = mean(x2,2); std2 = std(x2,0,2);
+% 
+% ci1 = tval1 * std1 / sqrt(n1);
+% ci2 = tval2 * std2 / sqrt(n2);
+% 
+% iter = 1:size(x1,1);
+% 
+% 
+% fill([x1, flipud(x1)], [mean1-ci1; flipud(mean1+ci1)]', [1,0.7,0.7], 'EdgeColor','none','FaceAlpha',0.5);
+
+
+
+% plot(xc,y1)
+% % [lower,upper,medianFit] = plot_confidence_belt(xc,y1,rate);
+% plot(xc,mov_y1)
+% plot(xc,y2)
+% % [lower,upper,medianFit] = plot_confidence_belt(xc,y2,rate);
+% plot(xc,mov_y2)
+% plot(xc,y3)
+% % [lower,upper,medianFit] = plot_confidence_belt(xc,y3,rate);
+% plot(xc,mov_y3)
+% plot(xc,y4)
+% % [lower,upper,medianFit] = plot_confidence_belt(xc,y4,rate);
+% plot(xc,mov_y4)
+% plot(xc,yc2)
+% % [lower,upper,medianFit] = plot_confidence_belt(xc,yc2,rate);
+% plot(xc,mov_yc2)
+hold off
+
+

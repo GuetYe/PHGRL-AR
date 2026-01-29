@@ -1,0 +1,7 @@
+% 生成多组数据
+num = 50;
+x = (1:num)';
+group = [ones(1,5), 2*ones(1,7), 3*ones(1,6)];
+y_data = [randn(15,5)+x, randn(15,7)+x*1.2, randn(15,6)+x*1.5];
+
+tsplot_matlab(x, y_data, group)

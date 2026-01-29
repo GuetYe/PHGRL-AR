@@ -1,0 +1,184 @@
+<root>
+    <topology>
+        <switches>
+            <node id="s1">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s2">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s3">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s4">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s5">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s6">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s7">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s8">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s9">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s10">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s11">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s12">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s13">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s14">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s15">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s16">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s17">
+            <location latitude="0" longitude="0"/>
+            </node>
+            <node id="s18">
+            <location latitude="0" longitude="0"/>
+            </node>
+        </switches>
+        <links>
+            <link id="s1_s5">
+                <from if="0" node="s1"/>
+                <to if="0" node="s5"/>
+            </link>
+            <link id="s2_s5">
+                <from if="0" node="s2"/>
+                <to if="0" node="s5"/>
+            </link>
+            <link id="s5_s11">
+                <from if="0" node="s5"/>
+                <to if="0" node="s11"/>
+            </link>
+            <link id="s9_s11">
+                <from if="0" node="s9"/>
+                <to if="0" node="s11"/>
+            </link>
+            <link id="s11_s15">
+                <from if="0" node="s11"/>
+                <to if="0" node="s15"/>
+            </link>
+            <link id="s12_s15">
+                <from if="0" node="s12"/>
+                <to if="0" node="s15"/>
+            </link>
+            <link id="s2_s6">
+                <from if="0" node="s2"/>
+                <to if="0" node="s6"/>
+            </link>
+            <link id="s6_s9">
+                <from if="0" node="s6"/>
+                <to if="0" node="s9"/>
+            </link>
+            <link id="s9_s12">
+                <from if="0" node="s9"/>
+                <to if="0" node="s12"/>
+            </link>
+            <link id="s12_s16">
+                <from if="0" node="s12"/>
+                <to if="0" node="s16"/>
+            </link>
+            <link id="s3_s6">
+                <from if="0" node="s3"/>
+                <to if="0" node="s6"/>
+            </link>
+            <link id="s7_s9">
+                <from if="0" node="s7"/>
+                <to if="0" node="s9"/>
+            </link>
+            <link id="s10_s12">
+                <from if="0" node="s10"/>
+                <to if="0" node="s12"/>
+            </link>
+            <link id="s13_s16">
+                <from if="0" node="s13"/>
+                <to if="0" node="s16"/>
+            </link>
+            <link id="s3_s7">
+                <from if="0" node="s3"/>
+                <to if="0" node="s7"/>
+            </link>
+            <link id="s7_s10">
+                <from if="0" node="s7"/>
+                <to if="0" node="s10"/>
+            </link>
+            <link id="s10_s13">
+                <from if="0" node="s10"/>
+                <to if="0" node="s13"/>
+            </link>
+            <link id="s13_s17">
+                <from if="0" node="s13"/>
+                <to if="0" node="s17"/>
+            </link>
+            <link id="s4_s7">
+                <from if="0" node="s4"/>
+                <to if="0" node="s7"/>
+            </link>
+            <link id="s8_s10">
+                <from if="0" node="s8"/>
+                <to if="0" node="s10"/>
+            </link>
+            <link id="s10_s14">
+                <from if="0" node="s10"/>
+                <to if="0" node="s14"/>
+            </link>
+            <link id="s4_s8">
+                <from if="0" node="s4"/>
+                <to if="0" node="s8"/>
+            </link>
+            <link id="s8_s14">
+                <from if="0" node="s8"/>
+                <to if="0" node="s14"/>
+            </link>
+            <link id="s14_s18">
+                <from if="0" node="s14"/>
+                <to if="0" node="s18"/>
+            </link>
+        </links>
+        <hosts>
+            <node id="h1">
+            <location switch="s1"/>
+            </node>
+            <node id="h2">
+            <location switch="s2"/>
+            </node>
+            <node id="h3">
+            <location switch="s3"/>
+            </node>
+            <node id="h4">
+            <location switch="s4"/>
+            </node>
+            <node id="h15">
+            <location switch="s15"/>
+            </node>
+            <node id="h16">
+            <location switch="s16"/>
+            </node>
+            <node id="h17">
+            <location switch="s17"/>
+            </node>
+            <node id="h18">
+            <location switch="s18"/>
+            </node>
+        </hosts>
+    </topology>
+</root>
